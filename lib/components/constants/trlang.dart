@@ -1,0 +1,16 @@
+String newUserWelcomeInputLabel = 'Hos geldin. Adin nedir?';
+String newUserWelcomeInputHint = 'Dizdar Kosu';
+String oldUserWelcomeText = 'Hos geldin, ';
+String playButtonLabel = 'OYUNA BASLA';
+String warningTitle = 'Uyari';
+String deleteUserWarningText = 'Kullanıcıyı silmek istediğine emin misin? Bu işlem geri alınamaz.';
+String cancelButtonLabel = 'Iptal';
+String continueButtonLabel = 'Devam';
+String deleteUserButtonLabel = ' degil misin? Kullaniciyi sil!';
+String exitGameWarningText = 'Oyundan cikmak istedigine emin misin?';
+String todaysLeaders = 'Gunun Liderleri';
+String scoreLabel = 'Skor: ';
+String finishPopupTitle = 'Tebrikler!';
+String finishPopupText = 'Ekibi tamamladin ve basarin kayitlara gecti! Simdi tekrar mi denemek istersin, yoksa ana menude sirani mi gormek istersin?';
+String replayButtonText = 'Tekrar Dene';
+String returnToMenuButtonText = 'Ana Menu';
