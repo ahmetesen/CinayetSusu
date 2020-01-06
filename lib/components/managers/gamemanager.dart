@@ -1,3 +1,4 @@
+import 'package:cinayetsusu/components/managers/connectionmanager.dart';
 import 'package:cinayetsusu/components/managers/fbmanager.dart';
 import 'package:cinayetsusu/components/models/score.dart';
 
@@ -17,10 +18,13 @@ class GameManager{
   }
 
   Future<List<Score>> updateTopTenUser() async{
+    if(ConnectionManager().isOnline == false)
+      return null;
     if(this._topTenUsers == null){
       this._topTenUsers = new List<Score>();
     }
     this._topTenUsers = await FBManager().getFirstTenUser();
     return this._topTenUsers;
   }
+
 }

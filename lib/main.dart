@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:cinayetsusu/components/core/faderoute.dart';
+import 'package:cinayetsusu/components/managers/connectionmanager.dart';
 import 'package:cinayetsusu/components/managers/devicemanager.dart';
 import 'package:cinayetsusu/components/managers/gamemanager.dart';
 import 'package:cinayetsusu/components/screens/loginscreen.dart';
@@ -14,6 +15,7 @@ void main() async {
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
+  ConnectionManager().startListening();
 }
 
 class MyApp extends StatefulWidget {

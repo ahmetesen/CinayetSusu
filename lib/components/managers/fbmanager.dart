@@ -14,6 +14,7 @@ class FBManager{
   final HttpsCallable _getFirstTenUser = CloudFunctions.instance.useFunctionsEmulator(origin: "http://localhost:8010").getHttpsCallable(functionName: "getFirstTenUser");
   final HttpsCallable _ping = CloudFunctions.instance.useFunctionsEmulator(origin: "http://localhost:8010").getHttpsCallable(functionName: "ping");
   final HttpsCallable _updateUser = CloudFunctions.instance.useFunctionsEmulator(origin: "http://localhost:8010").getHttpsCallable(functionName: "updateUser");
+  final HttpsCallable _saveUserPoint = CloudFunctions.instance.useFunctionsEmulator(origin: "http://localhost:8010").getHttpsCallable(functionName: "saveUserPoint");
  */
 
   //Device
@@ -22,6 +23,7 @@ class FBManager{
   final HttpsCallable _getFirstTenUser = CloudFunctions.instance.getHttpsCallable(functionName: "getFirstTenUser");
   final HttpsCallable _ping = CloudFunctions.instance.getHttpsCallable(functionName: "ping");
   final HttpsCallable _updateUser = CloudFunctions.instance.getHttpsCallable(functionName: "updateUser");
+  final HttpsCallable _saveUserPoint = CloudFunctions.instance.getHttpsCallable(functionName: "saveUserPoint");
 
 
   Future<bool> checkInternetConnection() async {
@@ -65,5 +67,9 @@ class FBManager{
 
   Future updateUser(User user) async {
     await _updateUser.call(user.toJson());
+  }
+
+  Future saveUserPoint(Score score) async {
+    await _saveUserPoint.call(score.toJson());
   }
 }

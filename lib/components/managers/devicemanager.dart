@@ -1,4 +1,5 @@
 import 'dart:io' show Platform;
+import 'package:cinayetsusu/components/managers/connectionmanager.dart';
 import 'package:cinayetsusu/components/managers/fbmanager.dart';
 import 'package:cinayetsusu/components/models/user.dart';
 import 'package:device_info/device_info.dart';
@@ -51,7 +52,8 @@ class DeviceManager{
   Future updateUsername({String displayName}) async {
     var user = new User(deviceId: currentUser.deviceId,displayName: displayName);
     try{
-      await FBManager().updateUser(user);
+      if(ConnectionManager().isOnline)
+        await FBManager().updateUser(user);
       await _storage.write(key: 'displayName',value: displayName);
     }
     catch(err){
