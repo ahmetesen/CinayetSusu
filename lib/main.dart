@@ -12,10 +12,10 @@ import 'components/uielements/logo.dart';
 
 void main() async {
   runApp(MaterialApp(home: MyApp(),));
+  ConnectionManager().startListening();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
-  ConnectionManager().startListening();
 }
 
 class MyApp extends StatefulWidget {

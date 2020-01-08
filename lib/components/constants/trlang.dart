@@ -1,5 +1,5 @@
 String newUserWelcomeInputLabel = 'Hos geldin. Adin nedir?';
-String newUserWelcomeInputHint = 'Dizdar Kosu';
+String newUserWelcomeInputHint = 'Orn: Dizdar Kosu';
 String oldUserWelcomeText = 'Hos geldin, ';
 String playButtonLabel = 'OYUNA BASLA';
 String warningTitle = 'Uyari';

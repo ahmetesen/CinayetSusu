@@ -34,7 +34,7 @@ class _GameBoardState extends State<GameBoard> {
   bool _stopped = false;
   int successfulClickCount = 0;
   bool _gameComplete = false;
-  final int maxLevel = 1;
+  final int maxLevel = 3;
 
   @override
   void initState(){

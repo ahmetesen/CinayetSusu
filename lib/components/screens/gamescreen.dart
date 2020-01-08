@@ -1,8 +1,10 @@
 import 'package:cinayetsusu/components/managers/devicemanager.dart';
+import 'package:cinayetsusu/components/managers/gamemanager.dart';
 import 'package:cinayetsusu/components/uielements/cstext.dart';
 import 'package:cinayetsusu/components/uielements/gameboard.dart';
 import 'package:cinayetsusu/components/uielements/success.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import '../constants/colors.dart';
 import '../constants/trlang.dart';
 
@@ -19,15 +21,16 @@ class _GameScreenState extends State<GameScreen> {
   int _playCount = 0;
   
   void backRequested() {
-    showDialog(barrierDismissible: true, context: context,builder:(BuildContext context){
-      return AlertDialog(
+    showPlatformDialog(androidBarrierDismissible: true, context: context,builder:(BuildContext context){
+      GameManager().updateTopTenUser();
+      return PlatformAlertDialog(
         title: Text(warningTitle),
         content:Text(exitGameWarningText),
         actions: [
-          FlatButton(child: Text(cancelButtonLabel), onPressed: (){
+          PlatformDialogAction(child: Text(cancelButtonLabel), onPressed: (){
             Navigator.pop(context);
           }),
-          FlatButton(child: Text(continueButtonLabel), onPressed: () async {
+          PlatformDialogAction(child: Text(continueButtonLabel), onPressed: () async {
             Navigator.pop(context);
             Navigator.pop(context);
           })
@@ -114,6 +117,9 @@ class _GameScreenState extends State<GameScreen> {
                               showScoreChange(point);
                             },
                             onCompleted: (){
+                              GameManager().saveScore(currentScore:this.score).then((any){
+                                GameManager().updateTopTenUser();
+                              });
                               this.setState((){
                                 this._gameComplete = true;
                               });

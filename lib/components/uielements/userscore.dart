@@ -9,7 +9,6 @@ class UserScore extends StatelessWidget{
 
   List<Widget> badges(){
     List<Widget> result = [];
-    //TODO: create 2 row and align it
     var pointContainer = Container(
         margin:EdgeInsets.fromLTRB(4, 4, 0, 4),
         child:CsText(this.point.toString(), textType: TextType.Regular)

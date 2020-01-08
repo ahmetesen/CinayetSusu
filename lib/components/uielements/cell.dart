@@ -55,7 +55,7 @@ class _CellState extends State<Cell> with TickerProviderStateMixin{
     this.setState((){
       activeChar = chars[Random().nextInt(5)];
     });
-    Future.delayed(Duration(milliseconds: 10)).then((sth){
+    Future.delayed(Duration(milliseconds: 20)).then((sth){
       this.setState((){
         _charVisible = true;
       });

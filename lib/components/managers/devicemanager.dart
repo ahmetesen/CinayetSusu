@@ -36,8 +36,10 @@ class DeviceManager{
     String value = await _storage.read(key: 'deviceId');
     if(value == null){
       try{
-        currentUser.deviceId = await FBManager().createUser(user: currentUser);
-        await _storage.write(key: 'deviceId',value: currentUser.deviceId);
+        if(ConnectionManager().isOnline==true){
+          currentUser.deviceId = await FBManager().createUser(user: currentUser);
+          await _storage.write(key: 'deviceId',value: currentUser.deviceId);
+        }
       }
       catch(err){
         throw err;
@@ -50,6 +52,7 @@ class DeviceManager{
   }     
 
   Future updateUsername({String displayName}) async {
+    currentUser.displayName = displayName;
     var user = new User(deviceId: currentUser.deviceId,displayName: displayName);
     try{
       if(ConnectionManager().isOnline)

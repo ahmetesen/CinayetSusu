@@ -17,8 +17,7 @@ class FBManager{
   final HttpsCallable _saveUserPoint = CloudFunctions.instance.useFunctionsEmulator(origin: "http://localhost:8010").getHttpsCallable(functionName: "saveUserPoint");
  */
 
-  //Device
-  
+  //Hard Device
   final HttpsCallable _createUser = CloudFunctions.instance.getHttpsCallable(functionName: "createUserAndSaveToDb");
   final HttpsCallable _getFirstTenUser = CloudFunctions.instance.getHttpsCallable(functionName: "getFirstTenUser");
   final HttpsCallable _ping = CloudFunctions.instance.getHttpsCallable(functionName: "ping");
@@ -61,7 +60,7 @@ class FBManager{
         return null;
     }
     catch(error){
-      return null;
+      throw error;
     }
   }
 

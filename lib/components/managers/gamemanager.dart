@@ -2,6 +2,8 @@ import 'package:cinayetsusu/components/managers/connectionmanager.dart';
 import 'package:cinayetsusu/components/managers/fbmanager.dart';
 import 'package:cinayetsusu/components/models/score.dart';
 
+import 'devicemanager.dart';
+
 class GameManager{
   List<Score> _topTenUsers;
   static GameManager _instance = GameManager._internal();
@@ -26,5 +28,17 @@ class GameManager{
     this._topTenUsers = await FBManager().getFirstTenUser();
     return this._topTenUsers;
   }
+  Future<bool> saveScore({int currentScore}) async {
 
+    var score = new Score(deviceId:DeviceManager().currentUser.deviceId, score:currentScore ,displayName: DeviceManager().currentUser.displayName);
+    try{
+      if(ConnectionManager().isOnline)
+        await FBManager().saveUserPoint(score);
+        return true;
+    }
+    catch(err){
+      return err;
+      //TODO:log errors
+    }
+  }
 }

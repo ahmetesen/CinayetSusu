@@ -4,7 +4,9 @@ import 'package:cinayetsusu/components/managers/gamemanager.dart';
 import 'package:cinayetsusu/components/models/score.dart';
 import 'package:cinayetsusu/components/uielements/cstext.dart';
 import 'package:cinayetsusu/components/uielements/scoreboard.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import '../constants/colors.dart';
 import '../constants/trlang.dart';
 import '../uielements/logo.dart';
@@ -23,6 +25,8 @@ class _LoginScreenState extends State<LoginScreen> {
   String displayName;
   String inputVal;
   List<Score> scores = new List<Score>();
+
+  bool _disableButton=false;
   _LoginScreenState(){
     displayName = DeviceManager().currentUser.displayName;
     GameManager().getTopTenUser().then((data){
@@ -47,6 +51,14 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future formSubmit() async {
+    if(_disableButton == true){
+      FocusScope.of(context).requestFocus(new FocusNode());
+      return;
+    }
+
+    this.setState((){
+      _disableButton = true;
+    });
     if(this.inputVal != null && this.inputVal.isNotEmpty){
       await DeviceManager().updateUsername(displayName:this.inputVal);
       this.displayName = this.inputVal; 
@@ -56,17 +68,21 @@ class _LoginScreenState extends State<LoginScreen> {
       ); 
     }
     else if(this.displayName != null && this.displayName.isNotEmpty){
-      Navigator.push(
+      final result = await Navigator.push(
         context,
         FadeRoute(page:GameScreen()),
       ); 
+      scores = await GameManager().getTopTenUser();
     }
-    FocusScope.of(context).requestFocus(new FocusNode());
+
+    this.setState((){
+      _disableButton = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    
+
     return WillPopScope(
       child:Scaffold(
         backgroundColor:screenBackgroundColor,
@@ -115,28 +131,30 @@ class _LoginScreenState extends State<LoginScreen> {
                       Stack(
                         fit: StackFit.passthrough,
                         children: <Widget>[
-                          Container(margin: EdgeInsets.fromLTRB(0, 8, 0, 8), child:RaisedButton(
-                            color: secondaryForegroundColor,
-                            child:CsText(playButtonLabel,textType: TextType.Button),
-                            onPressed: () async {
-                              await this.formSubmit();
-                            },
-                          )),
+                          Container(margin: EdgeInsets.fromLTRB(0, 8, 0, 8), 
+                            child:RaisedButton(
+                              color: secondaryForegroundColor,
+                              child:CsText(playButtonLabel,textType: TextType.Button),
+                              onPressed: () async {
+                                await this.formSubmit();
+                              },
+                            )
+                          ),
                         ],
                       ),
                       
                       (displayName != null && displayName.isNotEmpty)?
                         GestureDetector(
                           onTap: () {
-                            showDialog(barrierDismissible: true, context: context,builder:(BuildContext context){
-                              return AlertDialog(
+                            showPlatformDialog(androidBarrierDismissible: true, context: context,builder:(BuildContext context){
+                              return PlatformAlertDialog(
                                 title: Text(warningTitle),
                                 content:Text(deleteUserWarningText),
                                 actions: [
-                                  FlatButton(child: Text(cancelButtonLabel), onPressed: (){
+                                  PlatformDialogAction(child: Text(cancelButtonLabel), onPressed: (){
                                     Navigator.pop(context);
                                   }),
-                                  FlatButton(child: Text(continueButtonLabel), onPressed: () async {
+                                  PlatformDialogAction(child: Text(continueButtonLabel), onPressed: () async {
                                     await DeviceManager().deleteSavedUserOnDevice();
                                     Navigator.pop(context);
                                     this.setState(() {

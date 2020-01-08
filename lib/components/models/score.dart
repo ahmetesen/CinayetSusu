@@ -9,7 +9,7 @@ class Score{
   int score;
 
 
-  Score({this.deviceId,this.scoreId,this.score});
+  Score({this.deviceId,this.scoreId,this.score, this.displayName});
 
     factory Score.fromJson(Map<dynamic, dynamic> json) {
     return _$ScoreFromJson(json);

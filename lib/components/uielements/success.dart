@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import '../constants/trlang.dart';
 
 class Success extends StatefulWidget{
@@ -22,16 +23,16 @@ class Success extends StatefulWidget{
     super.initState();
     Future.delayed(Duration(milliseconds: 3320)).then((any){
 
-      showDialog(barrierDismissible: true, context: context,builder:(BuildContext context){
-        return AlertDialog(
+      showPlatformDialog(androidBarrierDismissible: true, context: context,builder:(BuildContext context){
+        return PlatformAlertDialog(
           title: Text(finishPopupTitle),
           content:Text(finishPopupText),
           actions: [
-            FlatButton(child: Text(replayButtonText), onPressed: (){
+            PlatformDialogAction(child: Text(replayButtonText), onPressed: (){
               Navigator.pop(context);
               this.widget.onReplayClick();
             }),
-            FlatButton(child: Text(returnToMenuButtonText), onPressed: () async {
+            PlatformDialogAction(child: Text(returnToMenuButtonText), onPressed: () async {
               Navigator.pop(context);
               Navigator.pop(context);
             })
