@@ -27,12 +27,12 @@ class CsText extends StatelessWidget{
       case TextType.Big:
         this._foreground = primaryForegroundColor;
         _fontWeight = FontWeight.normal;
-        _fontSize = 88;
+        _fontSize = 144;
       break;
       case TextType.BigFail:
         this._foreground = Color.fromARGB(255, 255, 0, 0);
         _fontWeight = FontWeight.normal;
-        _fontSize = 100;
+        _fontSize = 182;
       break;
       case TextType.Title:
         this._foreground = primaryForegroundColor;

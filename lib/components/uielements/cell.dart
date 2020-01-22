@@ -11,7 +11,8 @@ typedef Bump = void Function({@required CharType type, @required int point});
 class Cell extends StatefulWidget{
   final Bump onBump;
   final bool stop;
-  Cell({Key key, this.onBump, this.stop}) : super(key: key);
+  final int charCount;
+  Cell({Key key, this.onBump, this.stop, this.charCount}) : super(key: key);
 
   @override
   _CellState createState() => _CellState();
@@ -31,12 +32,20 @@ class _CellState extends State<Cell> with TickerProviderStateMixin{
 
   @override
   void initState(){
+    super.initState();
     controller = GifController(vsync: this, duration: Duration(milliseconds: 400));
-    for(int i = 0 ; i < CharType.values.length; i++){
+    for(int i = 0 ; i < this.widget.charCount; i++){
       chars.add(new Char(type: CharType.values[i]));
     }
-    super.initState();
-    beginShow();
+    if(this.widget.stop == false)
+      beginShow();
+  }
+
+  @override
+  void didUpdateWidget(Cell oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if(oldWidget.stop == true && this.widget.stop == false)
+      beginShow();
   }
 
   void beginShow(){
@@ -53,7 +62,7 @@ class _CellState extends State<Cell> with TickerProviderStateMixin{
     controller.animateTo(8);
     _showTimer = new Timer(Duration(milliseconds:(Random().nextInt(200))+2000),endShow);
     this.setState((){
-      activeChar = chars[Random().nextInt(5)];
+      activeChar = chars[Random().nextInt(this.widget.charCount)];
     });
     Future.delayed(Duration(milliseconds: 20)).then((sth){
       this.setState((){
@@ -62,7 +71,7 @@ class _CellState extends State<Cell> with TickerProviderStateMixin{
     });
   }
 
-  void endShow(){
+  void endShow({bool permanentlyEnd = false}){
     if(_showTimer != null)
       _showTimer.cancel();
     if(controller.isAnimating){
@@ -79,7 +88,8 @@ class _CellState extends State<Cell> with TickerProviderStateMixin{
       activeChar = null;
       this._visible = false;
     });
-    _showTimer = new Timer(Duration(milliseconds:(Random().nextInt(100))+3000),beginShow);
+    if(this.widget.stop != true)
+      _showTimer = new Timer(Duration(milliseconds:(Random().nextInt(100))+3000),beginShow);
   }
 
   Future whenBump() async {
@@ -122,8 +132,8 @@ class _CellState extends State<Cell> with TickerProviderStateMixin{
   }
 
   Widget build(BuildContext context) {
-    if(this.widget.stop){
-      return Container();
+    if(this.widget.stop == true){
+      return Container(width: 80,height: 80);
     }
     return GestureDetector(
       onTap: () async {

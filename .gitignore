@@ -104,3 +104,5 @@ coverage/
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 !/dev/ci/**/Gemfile.lock
 android/.gradle/4.10.2/fileHashes/fileHashes.lock
+*.zip
+ios/Runner 2020-01-12 16-55-00

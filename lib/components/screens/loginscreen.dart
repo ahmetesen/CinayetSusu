@@ -2,6 +2,7 @@ import 'package:cinayetsusu/components/core/faderoute.dart';
 import 'package:cinayetsusu/components/managers/devicemanager.dart';
 import 'package:cinayetsusu/components/managers/gamemanager.dart';
 import 'package:cinayetsusu/components/models/score.dart';
+import 'package:cinayetsusu/components/screens/tutorialscreen.dart';
 import 'package:cinayetsusu/components/uielements/cstext.dart';
 import 'package:cinayetsusu/components/uielements/scoreboard.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool scoreLoaded = false;
   String displayName;
   String inputVal;
+  bool gameCheck = false;
   List<Score> scores = new List<Score>();
 
   bool _disableButton=false;
@@ -51,6 +53,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future formSubmit() async {
+    if(gameCheck == true){
+      final skipTutorial = await Navigator.push(
+        context,
+        FadeRoute(page:TutorialScreen()),
+      );
+    }
     if(_disableButton == true){
       FocusScope.of(context).requestFocus(new FocusNode());
       return;
@@ -62,21 +70,38 @@ class _LoginScreenState extends State<LoginScreen> {
     if(this.inputVal != null && this.inputVal.isNotEmpty){
       await DeviceManager().updateUsername(displayName:this.inputVal);
       this.displayName = this.inputVal; 
-      Navigator.push(
+      this.inputVal = null;
+      final skipTutorial = await Navigator.push(
         context,
-        FadeRoute(page:GameScreen()),
-      ); 
+        FadeRoute(page:TutorialScreen()),
+      );
+      if(skipTutorial != null && skipTutorial == true){
+        await startGame();
+      }
+      else{
+        var currentScore = await GameManager().getTopTenUser();
+        this.setState((){
+          scores = currentScore;
+        });
+      }
     }
     else if(this.displayName != null && this.displayName.isNotEmpty){
-      final result = await Navigator.push(
-        context,
-        FadeRoute(page:GameScreen()),
-      ); 
-      scores = await GameManager().getTopTenUser();
+      await startGame();
     }
 
     this.setState((){
       _disableButton = false;
+    });
+  }
+
+  Future startGame() async {
+    final fromGameScreen = await Navigator.push(
+      context,
+      FadeRoute(page:GameScreen()),
+    ); 
+    var currentScore = await GameManager().getTopTenUser();
+    this.setState((){
+      scores = currentScore;
     });
   }
 
@@ -154,7 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   PlatformDialogAction(child: Text(cancelButtonLabel), onPressed: (){
                                     Navigator.pop(context);
                                   }),
-                                  PlatformDialogAction(child: Text(continueButtonLabel), onPressed: () async {
+                                  PlatformDialogAction(child: Text(deleteButtontext), onPressed: () async {
                                     await DeviceManager().deleteSavedUserOnDevice();
                                     Navigator.pop(context);
                                     this.setState(() {

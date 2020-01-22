@@ -17,12 +17,13 @@ class DeviceManager{
   bool muted = false;
 
   Future initializeUserAndDeviceInfo() async {
+    await ConnectionManager().startListening();
     String mute = await _storage.read(key: 'muted');
     muted = (mute!=null);
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     if(Platform.isIOS){
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-      currentUser.deviceModel = iosInfo.name+iosInfo.utsname.machine;
+      currentUser.deviceModel = iosInfo.name+'/'+iosInfo.utsname.machine;
     }
     else if(Platform.isAndroid){
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
@@ -49,7 +50,7 @@ class DeviceManager{
         currentUser.deviceId = value;
         currentUser.displayName = await _storage.read(key: 'displayName');
     }
-  }     
+  }
 
   Future updateUsername({String displayName}) async {
     currentUser.displayName = displayName;
@@ -60,12 +61,12 @@ class DeviceManager{
       await _storage.write(key: 'displayName',value: displayName);
     }
     catch(err){
-      //TODO:log errors
+      throw err;
     }
   }
 
   Future deleteSavedUserOnDevice() async {
-    await _storage.deleteAll();
+    await _storage.delete(key:'displayName');
   }
 
   Future toggleVolume()async{

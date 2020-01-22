@@ -6,8 +6,9 @@ import 'cstext.dart';
 
 class CharLabel extends StatefulWidget{
   final int level;
+  final int maxLevel;
   final CharType type;
-  CharLabel({Key key, this.type, this.level}) : super(key: key);
+  CharLabel({Key key, this.type, this.level, this.maxLevel}) : super(key: key);
 
   @override
   _CharLabelState createState() => _CharLabelState();
@@ -47,9 +48,9 @@ class _CharLabelState extends State<CharLabel> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Container(margin: EdgeInsets.only(top:8), child: CsText(title,textType: (this.widget.level==3)?TextType.FilledCharTitle:TextType.CharTitle)),
-        Container(margin: EdgeInsets.fromLTRB(0,4,0,4), child: CsText(name,textType: (this.widget.level==3)?TextType.FilledCharName:TextType.CharName,)),
-        Container(margin: EdgeInsets.only(bottom: 8), child: Bar(level:this.widget.level))        
+        Container(margin: EdgeInsets.only(top:8), child: CsText(title,textType: (this.widget.level==this.widget.maxLevel)?TextType.FilledCharTitle:TextType.CharTitle)),
+        Container(margin: EdgeInsets.fromLTRB(0,4,0,4), child: CsText(name,textType: (this.widget.level==this.widget.maxLevel)?TextType.FilledCharName:TextType.CharName,)),
+        Container(margin: EdgeInsets.only(bottom: 8), child: Bar(level:this.widget.level, maxLevel:this.widget.maxLevel))        
         
       ],
     );

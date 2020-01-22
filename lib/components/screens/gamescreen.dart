@@ -1,4 +1,3 @@
-import 'package:cinayetsusu/components/managers/devicemanager.dart';
 import 'package:cinayetsusu/components/managers/gamemanager.dart';
 import 'package:cinayetsusu/components/uielements/cstext.dart';
 import 'package:cinayetsusu/components/uielements/gameboard.dart';
@@ -15,12 +14,15 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
-  bool _mute = DeviceManager().muted;
   int score = 0;
   bool _gameComplete = false;
   int _playCount = 0;
+  bool _stopGame = false;
   
   void backRequested() {
+    this.setState((){
+      this._stopGame = true;
+    });
     showPlatformDialog(androidBarrierDismissible: true, context: context,builder:(BuildContext context){
       GameManager().updateTopTenUser();
       return PlatformAlertDialog(
@@ -28,6 +30,9 @@ class _GameScreenState extends State<GameScreen> {
         content:Text(exitGameWarningText),
         actions: [
           PlatformDialogAction(child: Text(cancelButtonLabel), onPressed: (){
+            this.setState((){
+              this._stopGame = false;
+            });
             Navigator.pop(context);
           }),
           PlatformDialogAction(child: Text(continueButtonLabel), onPressed: () async {
@@ -76,29 +81,6 @@ class _GameScreenState extends State<GameScreen> {
                               color: primaryForegroundColor,
                             ),
                           ),
-                          /* GestureDetector(
-                            onTap: ()async{
-                              await DeviceManager().toggleVolume();
-                              this.setState((){
-                                this._mute = !this._mute;
-                              });
-                            },
-                            child: 
-                              Container(
-                                color: Color.fromARGB(0, 255, 255, 255),
-                                margin: EdgeInsets.only(left: 4),
-                                child:this._mute? Icon(
-                                  Icons.volume_off,
-                                  color:defaultTextColor
-                                )
-                                :Icon(
-                                  Icons.volume_up,
-                                  color:primaryForegroundColor
-                                ),
-                              )
-                              
-                            ,
-                          ) */
                         ],
                       ),
                       Row(
@@ -112,7 +94,9 @@ class _GameScreenState extends State<GameScreen> {
                   Expanded(
                     child: Container(
                           alignment: Alignment.center,
-                          child: GameBoard(playCount: this._playCount,
+                          child: GameBoard(
+                            stopped: this._stopGame,
+                            playCount: this._playCount,
                             onPointChanged: ({int point}){
                               showScoreChange(point);
                             },
@@ -130,15 +114,13 @@ class _GameScreenState extends State<GameScreen> {
                 ],
               ),
               (this._gameComplete)?Success(
-                onReplayClick: (){
+                score: score,
+                onMainActionClick: (){
                   this.setState((){
                     _gameComplete = false;
                     _playCount++;
                     score = 0;
                   });
-
-                  //TODO call reset state of GameBoard
-
                 }
               ):Container()
             ],

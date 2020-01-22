@@ -1,4 +1,7 @@
 PODS:
+  - appmetrica_sdk (0.0.1):
+    - Flutter
+    - YandexMobileMetrica/Dynamic (= 3.9.2)
   - cloud_functions (0.0.1):
     - Firebase/Core
     - Firebase/Functions (~> 6.0)
@@ -6,8 +9,11 @@ PODS:
   - connectivity (0.0.1):
     - Flutter
     - Reachability
+  - Crashlytics (3.14.0):
+    - Fabric (~> 1.10.2)
   - device_info (0.0.1):
     - Flutter
+  - Fabric (1.10.2)
   - Firebase/Analytics (6.12.0):
     - Firebase/Core
   - Firebase/Core (6.12.0):
@@ -23,6 +29,13 @@ PODS:
     - Firebase/Core
     - Flutter
   - firebase_core (0.0.1):
+    - Firebase/Core
+    - Flutter
+  - firebase_core_web (0.1.0):
+    - Flutter
+  - firebase_crashlytics (0.0.1):
+    - Crashlytics
+    - Fabric
     - Firebase/Core
     - Flutter
   - FirebaseAnalytics (6.1.5):
@@ -93,18 +106,29 @@ PODS:
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
   - Reachability (3.2)
+  - YandexMobileMetrica/Dynamic (3.9.2):
+    - YandexMobileMetrica/Dynamic/Core (= 3.9.2)
+    - YandexMobileMetrica/Dynamic/Crashes (= 3.9.2)
+  - YandexMobileMetrica/Dynamic/Core (3.9.2)
+  - YandexMobileMetrica/Dynamic/Crashes (3.9.2):
+    - YandexMobileMetrica/Dynamic/Core
 
 DEPENDENCIES:
+  - appmetrica_sdk (from `.symlinks/plugins/appmetrica_sdk/ios`)
   - cloud_functions (from `.symlinks/plugins/cloud_functions/ios`)
   - connectivity (from `.symlinks/plugins/connectivity/ios`)
   - device_info (from `.symlinks/plugins/device_info/ios`)
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
+  - firebase_core_web (from `.symlinks/plugins/firebase_core_web/ios`)
+  - firebase_crashlytics (from `.symlinks/plugins/firebase_crashlytics/ios`)
   - Flutter (from `Flutter`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
 
 SPEC REPOS:
   trunk:
+    - Crashlytics
+    - Fabric
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuthInterop
@@ -120,8 +144,11 @@ SPEC REPOS:
     - GTMSessionFetcher
     - nanopb
     - Reachability
+    - YandexMobileMetrica
 
 EXTERNAL SOURCES:
+  appmetrica_sdk:
+    :path: ".symlinks/plugins/appmetrica_sdk/ios"
   cloud_functions:
     :path: ".symlinks/plugins/cloud_functions/ios"
   connectivity:
@@ -132,18 +159,27 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_analytics/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
+  firebase_core_web:
+    :path: ".symlinks/plugins/firebase_core_web/ios"
+  firebase_crashlytics:
+    :path: ".symlinks/plugins/firebase_crashlytics/ios"
   Flutter:
     :path: Flutter
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
 
 SPEC CHECKSUMS:
-  cloud_functions: 632a5f80a5688f79ec0c7417c4943f20857726d0
+  appmetrica_sdk: f46f687c620183514468affc8ca97237ea1269e6
+  cloud_functions: c4bd92b7867760f21811061e8a2ef34a1a4e764c
   connectivity: 6e94255659cc86dcbef1d452ad3e0491bb1b3e75
+  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   device_info: cbf09d2ec12aa7110e0b09fabe54b5bd6c8efe74
+  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: da031bc7012374e3bed17a6731b89327b29863b9
-  firebase_analytics: 2f3ab38886ff9d915b076d5aae2f964dc5ce7549
-  firebase_core: 971ffa0fb29e49b80a2ad295eb1ad1cdbd680ec4
+  firebase_analytics: d83001d25b9a58ca5eda8db0ef566c02d7af5258
+  firebase_core: 9bd2e66a276153e219a87ff39dfecb6b671f524a
+  firebase_core_web: d501d8b946b60c8af265428ce483b0fff5ad52d1
+  firebase_crashlytics: 0066966d67fee22065fdcf1c9703a97c4fdbae2e
   FirebaseAnalytics: 4e53a7eb7b76bc703c4d9239bc964545e9b23361
   FirebaseAuthInterop: 0ffa57668be100582bb7643d4fcb7615496c41fc
   FirebaseCore: bcd6c112429249d7921e907d661e8955a3549e26
@@ -160,6 +196,7 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 43b8b64263023d4f32caa0b40f4c8bfa3c5f36d8
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  YandexMobileMetrica: ea82087806f175981c9eccbb8e35f1d4ee35d788
 
 PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83
 

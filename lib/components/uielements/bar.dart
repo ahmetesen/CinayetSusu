@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 class Bar extends StatefulWidget{
   final int level;
-  Bar({Key key, this.level}) : super(key: key);
+  final int maxLevel;
+  Bar({Key key, this.level, this.maxLevel}) : super(key: key);
 
   @override
   _BarState createState() => _BarState();
@@ -40,7 +41,7 @@ class _BarState extends State<Bar> {
     if(this.widget.level!=null)
       level = this.widget.level;
     List<Container> bars = new List<Container>();
-    for(int i = 0; i<3;i++){
+    for(int i = 0; i<this.widget.maxLevel;i++){
       if(i<level)
         bars.add(collectedBarPart());
       else
