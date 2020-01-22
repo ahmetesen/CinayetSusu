@@ -106,3 +106,4 @@ coverage/
 android/.gradle/4.10.2/fileHashes/fileHashes.lock
 *.zip
 ios/Runner 2020-01-12 16-55-00
+ios/Runner.xcworkspace/xcshareddata
