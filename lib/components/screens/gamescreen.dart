@@ -1,3 +1,4 @@
+import 'package:cinayetsusu/components/managers/analysistoolsmanager.dart';
 import 'package:cinayetsusu/components/managers/gamemanager.dart';
 import 'package:cinayetsusu/components/uielements/cstext.dart';
 import 'package:cinayetsusu/components/uielements/gameboard.dart';
@@ -18,6 +19,13 @@ class _GameScreenState extends State<GameScreen> {
   bool _gameComplete = false;
   int _playCount = 0;
   bool _stopGame = false;
+
+  @override
+  void initState() {
+    super.initState();
+    AnalysisToolsManager().sendCurrentScreenForAnalysis(screenName: 'Game Screen',classOverride: 'gamescreen.dart');
+    AnalysisToolsManager().sendGameStartActionForAnalysis();
+  }
   
   void backRequested() {
     this.setState((){
@@ -36,6 +44,7 @@ class _GameScreenState extends State<GameScreen> {
             Navigator.pop(context);
           }),
           PlatformDialogAction(child: Text(continueButtonLabel), onPressed: () async {
+            AnalysisToolsManager().sendGameCompleteActionForAnalysis(success: 0);
             Navigator.pop(context);
             Navigator.pop(context);
           })
@@ -103,6 +112,7 @@ class _GameScreenState extends State<GameScreen> {
                             onCompleted: (){
                               GameManager().saveScore(currentScore:this.score).then((any){
                                 GameManager().updateTopTenUser();
+                                AnalysisToolsManager().sendGameCompleteActionForAnalysis(success: 1);
                               });
                               this.setState((){
                                 this._gameComplete = true;

@@ -1,3 +1,4 @@
+import 'package:cinayetsusu/components/managers/analysistoolsmanager.dart';
 import 'package:cinayetsusu/components/managers/gamemanager.dart';
 import 'package:cinayetsusu/components/uielements/cstext.dart';
 import 'package:cinayetsusu/components/uielements/success.dart';
@@ -14,7 +15,7 @@ class TutorialScreen extends StatefulWidget {
 }
 
 class _TutorialScreenState extends State<TutorialScreen> {
-  
+
   int _score = 0;
   bool _gameComplete = false;
   bool _dialog1 = true;
@@ -22,6 +23,12 @@ class _TutorialScreenState extends State<TutorialScreen> {
   int _correctHit = 0;
   int _wrongHit = 0;
   bool _stopGame = true;
+
+  void initState() {
+    super.initState();
+    AnalysisToolsManager().sendCurrentScreenForAnalysis(screenName: 'Tutorial Screen',classOverride: 'tutorialscreen.dart');
+    AnalysisToolsManager().sendTutorialBeginActionForAnalysis();
+  }
   
   void backRequested() {
     this.setState((){
@@ -41,6 +48,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
             Navigator.pop(context);
           }),
           PlatformDialogAction(child: Text(continueButtonLabel), onPressed: () async {
+            AnalysisToolsManager().sendSkipTutorialActionForAnalysis(score:this._score);
             Navigator.pop(context);
             Navigator.pop(context);
           })
@@ -147,6 +155,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
 
 
   void skipTutorial(){
+    AnalysisToolsManager().sendSkipTutorialActionForAnalysis(score:this._score);
     Navigator.pop(context,true);
   }
 
@@ -236,6 +245,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
                 tutorial:true,
                 score: _score,
                 onMainActionClick: (){
+                  AnalysisToolsManager().sendTutorialCompleteActionForAnalysis();
                   Navigator.pop(context,true);
                 }
               ):Container()

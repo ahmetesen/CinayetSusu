@@ -52,18 +52,6 @@
 @import firebase_crashlytics;
 #endif
 
-#if __has_include(<firebase_messaging/FLTFirebaseMessagingPlugin.h>)
-#import <firebase_messaging/FLTFirebaseMessagingPlugin.h>
-#else
-@import firebase_messaging;
-#endif
-
-#if __has_include(<firebase_remote_config/FirebaseRemoteConfigPlugin.h>)
-#import <firebase_remote_config/FirebaseRemoteConfigPlugin.h>
-#else
-@import firebase_remote_config;
-#endif
-
 #if __has_include(<flutter_secure_storage/FlutterSecureStoragePlugin.h>)
 #import <flutter_secure_storage/FlutterSecureStoragePlugin.h>
 #else
@@ -81,8 +69,6 @@
   [FLTFirebaseAnalyticsPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseAnalyticsPlugin"]];
   [FLTFirebaseCorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseCorePlugin"]];
   [FirebaseCrashlyticsPlugin registerWithRegistrar:[registry registrarForPlugin:@"FirebaseCrashlyticsPlugin"]];
-  [FLTFirebaseMessagingPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseMessagingPlugin"]];
-  [FirebaseRemoteConfigPlugin registerWithRegistrar:[registry registrarForPlugin:@"FirebaseRemoteConfigPlugin"]];
   [FlutterSecureStoragePlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterSecureStoragePlugin"]];
 }
 

@@ -1,7 +1,6 @@
 import 'dart:async';
-import 'package:appmetrica_sdk/appmetrica_sdk.dart';
 import 'package:cinayetsusu/components/core/faderoute.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:cinayetsusu/components/managers/analysistoolsmanager.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:cinayetsusu/components/managers/devicemanager.dart';
@@ -17,9 +16,12 @@ void main() async {
   Crashlytics.instance.enableInDevMode = true;
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
   WidgetsFlutterBinding.ensureInitialized();
-  await AppmetricaSdk()
-      .activate(apiKey: 'bc516d3c-da5d-4528-b21f-0e67b92015b4');
-  runApp(MaterialApp(home: MyApp(),));
+  await AnalysisToolsManager().initializeAppMetrica();
+  FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: AnalysisToolsManager().analytics);
+  runApp(MaterialApp(
+    navigatorObservers: <NavigatorObserver>[observer],
+    home: MyApp(),
+  ));
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
@@ -41,13 +43,11 @@ class _MyAppState extends State<MyApp> {
     timer.cancel();
   }
 
-  static FirebaseAnalytics analytics = FirebaseAnalytics();
-  static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: analytics);
-
   @override
   void initState() {
     super.initState();
-
+    AnalysisToolsManager().sendCurrentScreenForAnalysis(screenName: 'Loading Screen',classOverride: 'main.dart');
+    AnalysisToolsManager().sendGameOpenActionForAnalysis();
     try{
       DeviceManager().initializeUserAndDeviceInfo().then((data){
         GameManager().updateTopTenUser().then((subData){

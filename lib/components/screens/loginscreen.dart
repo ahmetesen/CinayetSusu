@@ -1,4 +1,5 @@
 import 'package:cinayetsusu/components/core/faderoute.dart';
+import 'package:cinayetsusu/components/managers/analysistoolsmanager.dart';
 import 'package:cinayetsusu/components/managers/devicemanager.dart';
 import 'package:cinayetsusu/components/managers/gamemanager.dart';
 import 'package:cinayetsusu/components/models/score.dart';
@@ -45,6 +46,10 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
+    AnalysisToolsManager().sendCurrentScreenForAnalysis(screenName: 'MainScreen',classOverride: 'loginscreen.dart');
+    if(this.displayName != null && this.displayName.isNotEmpty){
+      AnalysisToolsManager().sendLoginActionForAnalysis();
+    }
     _focusNode.addListener((){
       this.setState((){
         scoreVisibility = !scoreVisibility;
@@ -68,6 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
       _disableButton = true;
     });
     if(this.inputVal != null && this.inputVal.isNotEmpty){
+      AnalysisToolsManager().sendSignUpActionForAnalysis();
       await DeviceManager().updateUsername(displayName:this.inputVal);
       this.displayName = this.inputVal; 
       this.inputVal = null;
@@ -180,15 +186,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                     Navigator.pop(context);
                                   }),
                                   PlatformDialogAction(child: Text(deleteButtontext), onPressed: () async {
+                                    AnalysisToolsManager().sendLogoutActionForAnalysis();
                                     await DeviceManager().deleteSavedUserOnDevice();
                                     Navigator.pop(context);
                                     this.setState(() {
                                       this.displayName = null;
                                     });
                                   })
-
                                 ],
-                                
                               );
                             });
                           },
