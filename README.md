@@ -9,4 +9,5 @@ Bu sevimli oyunu tamamen ücretsiz ve reklamsız olarak oynayabilirsiniz :)
 Oyunu aşağıdaki adreslerden indirebilirsiniz:
 
 iOS: https://apps.apple.com/gb/app/cinayet-s%C3%BCs%C3%BC/id1494624321
+
 Android: https://play.google.com/store/apps/details?id=com.aee.cinayetsusu&hl=tr
