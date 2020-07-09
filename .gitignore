@@ -78,6 +78,7 @@ unlinked_spec.ds
 **/ios/**/DerivedData/
 **/ios/**/Icon?
 **/ios/**/Pods/
+**/ios/Pods/
 **/ios/**/.symlinks/
 **/ios/**/profile
 **/ios/**/xcuserdata
@@ -110,3 +111,4 @@ ios/Runner.xcworkspace/xcshareddata
 ios/Runner 2020-01-28 11-49-26
 android/app/google-services.json
 ios/Runner/GoogleService-Info.plist
+ios/Pods/
