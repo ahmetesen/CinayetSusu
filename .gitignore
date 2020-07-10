@@ -111,4 +111,5 @@ ios/Runner.xcworkspace/xcshareddata
 ios/Runner 2020-01-28 11-49-26
 android/app/google-services.json
 ios/Runner/GoogleService-Info.plist
-ios/Pods/
+ios/Pods
+ios/Pods_
